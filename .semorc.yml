@@ -7,20 +7,4 @@ extendDir: lib/extends
 extendMakeDir: src/extends
 hookDir: lib/hooks
 hookMakeDir: src/hooks
-migrationMakeDir: src/migrations
-migrationDir: lib/migrations
-
-semo-plugin-sequelize:
-  connection:
-    d8:
-      database: d8
-      username: d8
-      password: d8
-      host: localhost
-      port: 5432
-      dialect: postgres
-    d8dsn: postgres://d8:d8@localhost:5432/d8
-    lite:
-      dialect: sqlite
-      storage: test.sqlite
 

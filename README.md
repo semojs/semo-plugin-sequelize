@@ -22,7 +22,7 @@ npm i @semo/core semo-plugin-sequelize
 semo init
 ```
 
-Add migration config and dbConfig in .semorc.yml
+### Add migration config and dbConfig in .semorc.yml
 
 ```yml
 
@@ -42,12 +42,12 @@ semo-plugin-sequelize:
     dbKeyStyle2: postgres://d8:d8@localhost:5432/d8
 ```
 
-Except add db connection info in .semorc.yml, also we can declare that info in hook_sequelize_connection
+Except adding db connection info in .semorc.yml, also we can declare that info in hook_sequelize_connection.
 
 ```js
 // src/hooks/index.ts
 
-const export sequelize_connection = async () => {
+const export hook_sequelize_connection = async () => {
   return {
     dbKeyStyle1: {
       database: 'd8',
@@ -61,7 +61,9 @@ const export sequelize_connection = async () => {
 }
 ```
 
-Add .sequelizerc file for migration
+You may have noticed, there is a `async` for the hook_sequelize_connection, it's useful for fetching db config from config center.
+
+### Add .sequelizerc file for migration
 
 ```js
 const path = require('path');
@@ -79,7 +81,7 @@ module.exports = {
 }
 ```
 
-Add config.db.js for migration to connnect to db
+### Add config.db.js for migration to connnect to db
 
 ```js
 /**
@@ -93,7 +95,7 @@ module.exports = require('semo-plugin-sequelize').sequelize.db.getConfig('dbKey'
 
 Here, sequelize-cli only can choose to use one database to migrate.
 
-Access db instance and table model.
+### Access db instance and table model.
 
 ```js
 import { Utils } from '@semo/core'
@@ -110,11 +112,22 @@ const count = await YourModel.count({
 })
 ```
 
-To use cli command, you need to install related cli tools. This is an example on MacOS
+### To use cli command, you need to install related cli tools. This is an example on MacOS
 
 ```sh
 brew install pgcli # For PostgresSQL
 brew install mycli # For MySQL
+```
+
+### Access database in REPL
+
+This plugin has expose objects and methods to REPL, so you can assess db data from REPL.
+
+```js
+$ semo repl --hook
+>>> const { models: { YourModel } } = await sequelize.db.load('dbKey')
+>>> YourModel.count()
+2
 ```
 
 ## License
