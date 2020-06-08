@@ -63,6 +63,8 @@ const export hook_sequelize_connection = async () => {
 
 You may have noticed, there is a `async` for the hook_sequelize_connection, it's useful for fetching db config from config center.
 
+This plugin support 3 dialects: `mysql`, `postgres`, `sqlite`, and support 2 style's config format: literal object and DSN.
+
 ### Add .sequelizerc file for migration
 
 ```js
