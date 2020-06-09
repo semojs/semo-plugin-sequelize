@@ -1,14 +1,18 @@
 import { Utils } from '@semo/core'
 import DSNParser from '../../common/DSNParser'
 
-export const command = 'cli <dbKey>'
+export const command = 'cli'
 export const desc = 'Connect with pgcli/mycli/sqlite3 connector'
 
-export const builder = function(yargs: any) {}
+export const builder = function(yargs: any) {
+  yargs.option('db-key', { describe: 'Set db connection key', alias: 'key' })
+}
 
 export const handler = async function(argv: any) {
+  const appConfig = Utils.getApplicationConfig()
+  const dbKey = Utils._.get(appConfig, 'semo-plugin-sequelize.dbKey', argv.dbKey)
   const { sequelize } = await Utils.invokeHook('component')
-  let dbConfig = await sequelize.db.getConfig(argv.dbKey)
+  let dbConfig = await sequelize.db.getConfig(dbKey)
 
   if (!dbConfig) {
     Utils.error('Invalid db key!')

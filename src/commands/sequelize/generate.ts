@@ -3,11 +3,12 @@ import path from 'path'
 import { Utils } from '@semo/core'
 import * as migration from '../../common/migration'
 
-export const command = 'generate <dbKey> <tableName> [fieldName]'
+export const command = 'generate <tableName> [fieldName]'
 export const desc = 'Sequelize db migration generator'
 export const aliases = ['g', 'create']
 
 export const builder = function(yargs: any) {
+  yargs.option('db-key', { describe: 'Set db connection key', alias: 'key' })
   yargs.option('attributes', { default: false, describe: 'Define attributes for table/field', alias: 'attrs' })
   yargs.option('rename', { describe: 'Rename table/field name' })
   yargs.option('modify', { describe: 'Modify field defination' })
@@ -28,10 +29,13 @@ export const builder = function(yargs: any) {
 }
 
 export const handler = async function(argv: any) {
+  const appConfig = Utils.getApplicationConfig()
+  const dbKey = Utils._.get(appConfig, 'semo-plugin-sequelize.dbKey', argv.dbKey)
+
   try {
     const { sequelize } = await Utils.invokeHook('component')
-    let { db } = await sequelize.db.load(argv.dbKey)
-    const dbConfig = await sequelize.db.getConfig(argv.dbKey)
+    let { db } = await sequelize.db.load(dbKey)
+    const dbConfig = await sequelize.db.getConfig(dbKey)
 
     let tableName =
       dbConfig.prefix && argv.tableName.indexOf(dbConfig.prefix) !== 0

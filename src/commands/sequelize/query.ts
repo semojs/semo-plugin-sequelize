@@ -4,11 +4,12 @@ import { parse, stringify } from 'node-sqlparser'
 const MAX_FIELDS_RENDER_TABLE = 6
 const MAX_SELECT_ROWS = 1000
 
-export const command = 'query <dbKey> <sql>'
+export const command = 'query <sql>'
 export const desc = 'Execute SQL, only support SELECT'
 export const aliases = ['q']
 
 export const builder = function(yargs: any) {
+  yargs.option('db-key', { describe: 'Set db connection key', alias: 'key' })
   yargs.option('fields', { describe: 'pick fields from query results' })
   yargs.option('pipe', { describe: 'output result using TSV format' })
   yargs.option('raw', { describe: 'output raw result' })
@@ -16,9 +17,12 @@ export const builder = function(yargs: any) {
 }
 
 export const handler = async function(argv: any) {
+  const appConfig = Utils.getApplicationConfig()
+  const dbKey = Utils._.get(appConfig, 'semo-plugin-sequelize.dbKey', argv.dbKey)
+
   try {
     const { sequelize } = await Utils.invokeHook('component')
-    let { db } = await sequelize.db.load(argv.dbKey)
+    let { db } = await sequelize.db.load(dbKey)
 
     let ast
     try {

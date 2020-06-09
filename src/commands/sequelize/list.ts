@@ -1,15 +1,20 @@
 import { Utils } from '@semo/core'
 
-export const command = 'list <dbKey>'
+export const command = 'list'
 export const desc = 'List all table of specific database'
 export const aliases = ['l', 'ls']
 
-export const builder = function(yargs: any) {}
+export const builder = function(yargs: any) {
+  yargs.option('db-key', { describe: 'Set db connection key', alias: 'key' })
+}
 
 export const handler = async function(argv: any) {
+  const appConfig = Utils.getApplicationConfig()
+  const dbKey = Utils._.get(appConfig, 'semo-plugin-sequelize.dbKey', argv.dbKey)
+
   try {
     const { sequelize } = await Utils.invokeHook('component')
-    let { db } = await sequelize.db.load(argv.dbKey)
+    let { db } = await sequelize.db.load(dbKey)
 
     const queryInterface = db.getQueryInterface()
     const tables = await queryInterface.showAllTables()

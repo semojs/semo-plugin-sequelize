@@ -90,19 +90,23 @@ const getPostgresFieldsCommentContent = async (db: any, tableName: string) => {
     .filter(Utils._.identity)
 }
 
-export const command = 'describe <dbKey> <tableName>'
+export const command = 'describe <tableName>'
 export const desc = 'Sequelize db table describe'
 export const aliases = ['d', 'desc']
 
 export const builder = function(yargs: any) {
+  yargs.option('db-key', { describe: 'Set db connection key', alias: 'key' })
   yargs.option('quiet', { describe: 'Only show field name', alias: 'q' })
 }
 
 export const handler = async function(argv: any) {
+  const appConfig = Utils.getApplicationConfig()
+  const dbKey = Utils._.get(appConfig, 'semo-plugin-sequelize.dbKey', argv.dbKey)
+
   try {
     const { sequelize } = await Utils.invokeHook('component')
-    let { db } =  await sequelize.db.load(argv.dbKey)
-    let dbConfig = await sequelize.db.getConfig(argv.dbKey)
+    let { db } =  await sequelize.db.load(dbKey)
+    let dbConfig = await sequelize.db.getConfig(dbKey)
 
     const queryInterface = db.getQueryInterface()
     const tables = await queryInterface.showAllTables()
