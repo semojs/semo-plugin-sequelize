@@ -127,7 +127,7 @@ This plugin has expose objects and methods to REPL, so you can assess db data fr
 
 ```js
 $ semo repl --hook
->>> const { models: { YourModel } } = await sequelize.db.load('dbKey')
+>>> const { models: { YourModel } } = await Semo.sequelize.db.load('dbKey')
 >>> YourModel.count()
 2
 ```
