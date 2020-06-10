@@ -1,6 +1,6 @@
 {
   "name": "semo-plugin-sequelize",
-  "version": "0.0.8",
+  "version": "0.0.9",
   "description": "A Semo plugin to provide integration with Sequelize module.",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
