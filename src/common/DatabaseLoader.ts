@@ -1,6 +1,8 @@
 import { Sequelize, Op } from 'sequelize'
 import { Utils } from '@semo/core'
 
+import DSNParser from './DSNParser'
+
 class DatabaseLoader {
   lastInstance: any
   options: { [propName: string]: any }
@@ -55,15 +57,6 @@ class DatabaseLoader {
       logging: undefined
     }, opts)
 
-
-    if (!Utils._.isNull(opts.raw)) {
-      if (opts.query && Utils._.isObject(opts.query)) {
-        opts.query.raw = opts.row
-      } else {
-        opts.query = { raw: opts.raw }
-      }
-    }
-
     try {
       const instanceKey: string = Utils._.isString(dbKey) ? <string>dbKey : Utils.md5(JSON.stringify(dbKey))
 
@@ -74,9 +67,6 @@ class DatabaseLoader {
 
       let dbConfig: any
       if (Utils._.isObject(dbKey)) {
-        if (!instanceKey) {
-          throw new Error('The second parameter:instanceKey is required!')
-        }
         dbConfig = dbKey
       } else {
         dbConfig = await this.getConfig(dbKey)
@@ -89,12 +79,22 @@ class DatabaseLoader {
       let sequelize
       if (Utils._.isObject(dbConfig)) {
         opts = Utils._.merge(dbConfig, opts)
-        sequelize = new Sequelize(opts)
       } else if (Utils._.isString((dbConfig))) {
-        sequelize = new Sequelize(dbConfig, opts)
+        let parser = new DSNParser(dbConfig)
+        dbConfig = parser.getParts()
+        opts = Utils._.merge(dbConfig, opts)
       }
 
       
+      if (!Utils._.isNull(opts.raw)) {
+        if (opts.query && Utils._.isObject(opts.query)) {
+          opts.query.raw = opts.row
+        } else {
+          opts.query = { raw: opts.raw }
+        }
+      }
+
+      sequelize = new Sequelize(dbConfig, opts)
 
       function forbiddenMethod() {
         throw new Error('Dangerous method forbidden!')
