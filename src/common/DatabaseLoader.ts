@@ -24,7 +24,7 @@ class DatabaseLoader {
     return Op
   }
 
-  async getDefaultConnection() {
+  get defaultConnection() {
     const appConfig = Utils.getApplicationConfig()
     return Utils._.get(appConfig, 'semo-plugin-sequelize.defaultConnection')
   }
