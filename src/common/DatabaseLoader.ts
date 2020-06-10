@@ -54,7 +54,8 @@ class DatabaseLoader {
     let that: DatabaseLoader = this
     opts = Utils._.merge({
       raw: false,
-      logging: undefined
+      logging: undefined,
+      modelKey: ''
     }, opts)
 
     try {
@@ -187,7 +188,7 @@ class DatabaseLoader {
 
           if (modelDir) {
             try {
-              modelFilePath = require.resolve(`${modelDir}/${modelNameUpper}`)
+              modelFilePath = require.resolve(`${modelDir}/${opts.modelKey ? opts.modelKey + '/' : ''}${modelNameUpper}`)
             } catch (e) {
               if (e.code !== 'MODULE_NOT_FOUND') {
                 console.error(e.message)
