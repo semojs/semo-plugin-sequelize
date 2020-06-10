@@ -31,6 +31,7 @@ migrationMakeDir: src/migrations
 migrationDir: lib/migrations
 
 semo-plugin-sequelize:
+  defaultConnection: dbKeyStyle1 # if provided, commands do not need --db-key
   connection:
     dbKeyStyle1:
       database: d8
