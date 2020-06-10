@@ -94,7 +94,7 @@ class DatabaseLoader {
         }
       }
 
-      sequelize = new Sequelize(dbConfig, opts)
+      sequelize = new Sequelize(opts)
 
       function forbiddenMethod() {
         throw new Error('Dangerous method forbidden!')
@@ -181,7 +181,27 @@ class DatabaseLoader {
             options.updatedAt = newTableInfo['updatedAt'].field
           }
 
-          let model = sequelize.define(modelNameUpper, newTableInfo, options)
+          const appConfig = Utils.getApplicationConfig()
+          const modelDir = appConfig.modelDir
+          let model, modelFilePath
+
+          if (modelDir) {
+            try {
+              modelFilePath = require.resolve(`${modelDir}/${modelNameUpper}`)
+            } catch (e) {
+              if (e.code !== 'MODULE_NOT_FOUND') {
+                console.error(e.message)
+              }
+            }
+            if (Utils._.isString(modelDir) && modelFilePath && Utils.fs.existsSync(modelFilePath)) {
+              model = (require(modelFilePath)).init(newTableInfo, options)
+            } else {
+              model = sequelize.define(modelNameUpper, newTableInfo, options)
+            }
+          } else {
+            model = sequelize.define(modelNameUpper, newTableInfo, options)
+          }
+         
 
           model.drop = forbiddenMethod // 以防误删表
           model.sync = forbiddenMethod
@@ -202,6 +222,7 @@ class DatabaseLoader {
         }
       })
 
+      // trigger association
       Object.keys(sequelize.models).forEach(function (modelName) {
         let model: any = sequelize.models[modelName]
         if (Utils._.isFunction(model.associate)) {
