@@ -50,6 +50,7 @@ class DatabaseLoader {
     return dbConfig
   }
 
+  // Load database instance by db key
   async load(dbKey: string | { [propName: string]: any }, opts: any = {}) {
     let that: DatabaseLoader = this
     opts = Utils._.merge({
