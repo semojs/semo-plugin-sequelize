@@ -53,7 +53,7 @@ class DatabaseLoader {
   async load(dbKey: string | { [propName: string]: any }, opts: any = {}) {
     let that: DatabaseLoader = this
     opts = Utils._.merge({
-      raw: false,
+      raw: undefined,
       logging: undefined,
       modelKey: ''
     }, opts)
