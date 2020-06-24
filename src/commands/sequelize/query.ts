@@ -1,4 +1,3 @@
-import { Utils } from '@semo/core'
 import { parse, stringify } from 'node-sqlparser'
 
 const MAX_FIELDS_RENDER_TABLE = 6
@@ -17,8 +16,8 @@ export const builder = function(yargs: any) {
 }
 
 export const handler = async function(argv: any) {
-  const appConfig = Utils.getApplicationConfig()
-  const dbKey = Utils._.get(appConfig, 'semo-plugin-sequelize.defaultConnection', argv.dbKey)
+  const { Utils } = argv.$semo
+  const dbKey = Utils._.get('defaultConnection', argv.dbKey)
 
   try {
     const { sequelize } = await Utils.invokeHook('component')

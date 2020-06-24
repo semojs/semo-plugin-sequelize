@@ -1,4 +1,3 @@
-import { Utils } from '@semo/core'
 import DSNParser from '../../common/DSNParser'
 
 export const command = 'cli'
@@ -9,8 +8,8 @@ export const builder = function(yargs: any) {
 }
 
 export const handler = async function(argv: any) {
-  const appConfig = Utils.getApplicationConfig()
-  const dbKey = Utils._.get(appConfig, 'semo-plugin-sequelize.defaultConnection', argv.dbKey)
+  const { Utils } = argv.$semo
+  const dbKey = Utils.pluginConfig('defaultConnection', argv.dbKey)
   const { sequelize } = await Utils.invokeHook('component')
   let dbConfig = await sequelize.db.getConfig(dbKey)
 
