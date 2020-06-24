@@ -18,10 +18,10 @@
     esutils "^2.0.2"
     js-tokens "^4.0.0"
 
-"@semo/core@^0.10.3":
-  version "0.10.3"
-  resolved "https://registry.yarnpkg.com/@semo/core/-/core-0.10.3.tgz#f51341208166c3cecd8ce93afeb3b0b08893cba3"
-  integrity sha512-PVXTVw5w92TLosAPbuOuj60T8vHWOImCOdBT655mkyyHYTMXfe/f1Wu70yayIZwf7v9XD1vcumf5Y4KisbKXpg==
+"@semo/core@^0.10.5":
+  version "0.10.5"
+  resolved "https://registry.yarnpkg.com/@semo/core/-/core-0.10.5.tgz#65d89d380c7ed97a6b36a104a6ba97e16274cbe2"
+  integrity sha512-jB0Xbt9kMxMJdBYwFNQFRdImeb9XBxVla2dtobz0MO+YYf91dQxtw6zcVGUY63WIUAZ85h3ZEPTl21wSTQ6aeg==
   dependencies:
     chalk "^4.1.0"
     dayjs "^1.8.28"
