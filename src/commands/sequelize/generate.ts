@@ -2,6 +2,7 @@ import fs from 'fs'
 import path from 'path'
 import * as migration from '../../common/migration'
 
+export const plugin = 'sequelize'
 export const command = 'generate <tableName> [fieldName]'
 export const desc = 'Sequelize db migration generator'
 export const aliases = ['g', 'create']

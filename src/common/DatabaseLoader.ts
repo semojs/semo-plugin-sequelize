@@ -32,14 +32,18 @@ class DatabaseLoader {
   }
 
   async getConfigs() {
-    const appConfig = Utils.getApplicationConfig()
-    const rcSequelizeConfig = Utils._.get(appConfig, 'semo-plugin-sequelize.connection')
+    const rcSequelizeConfig = Utils.config('$plugin.sequelize.connection')
     const hookSequelizeConfig = await Utils.invokeHook('sequelize_connection')
     const finalSequelizeConfig = Utils._.merge(rcSequelizeConfig, hookSequelizeConfig)
     return finalSequelizeConfig
   }
 
   async getConfig(dbKey) {
+
+    if (!dbKey) {
+      throw new Error(`dbKey is required`)
+    }
+
     const dbConfigs = await this.getConfigs()
 
     const dbConfig = dbConfigs[dbKey]

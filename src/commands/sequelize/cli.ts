@@ -1,5 +1,6 @@
 import DSNParser from '../../common/DSNParser'
 
+export const plugin = 'sequelize'
 export const command = 'cli'
 export const desc = 'Connect with pgcli/mycli/sqlite3 connector'
 
