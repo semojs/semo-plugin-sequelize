@@ -18,10 +18,10 @@
     esutils "^2.0.2"
     js-tokens "^4.0.0"
 
-"@semo/core@^0.10.6":
-  version "0.10.6"
-  resolved "https://registry.yarnpkg.com/@semo/core/-/core-0.10.6.tgz#ade2203d918e136b60bbf28f7dc76e4a852a6bd7"
-  integrity sha512-3hNtmPKwQKdkasfxc2iZAYeY2gdqvSyixn7UutN8ZijmHQ2lKYgr0a35Ek87hsE/FXNlMWRrbW+qTIB1RBjTtA==
+"@semo/core@^0.10.9":
+  version "0.10.9"
+  resolved "https://registry.yarnpkg.com/@semo/core/-/core-0.10.9.tgz#05d960a9b1c15d1de104904601239b2faf152c33"
+  integrity sha512-LYh75qv3bBgy9ws78yq5FJPGAdNojV0yt6W041XKY1FyIExgvMZBdKqyfMVFG28MoC1a+2vbYpviF4Fw3993Cg==
   dependencies:
     chalk "^4.1.0"
     dayjs "^1.8.28"
@@ -2135,10 +2135,10 @@ seq-queue@^0.0.5:
   resolved "https://registry.yarnpkg.com/seq-queue/-/seq-queue-0.0.5.tgz#d56812e1c017a6e4e7c3e3a37a1da6d78dd3c93e"
   integrity sha1-1WgS4cAXpuTnw+Ojeh2m143TyT4=
 
-sequelize-cli@^6.0.0:
-  version "6.0.0"
-  resolved "https://registry.yarnpkg.com/sequelize-cli/-/sequelize-cli-6.0.0.tgz#2dc960459ae64d8555f258bf3cc6aa9876377e07"
-  integrity sha512-DhZ6QwBJR5VXjM5VFt49H+SbNCdJhfjW5seQyqvJA92te+w19lZBIRlKC42LtUnhLf3rBDn8Be3CSuT6reonbg==
+sequelize-cli@^6.1.0:
+  version "6.1.0"
+  resolved "https://registry.yarnpkg.com/sequelize-cli/-/sequelize-cli-6.1.0.tgz#aa03e48988f1943734286277e4b5af7ce6ce3445"
+  integrity sha512-Bb49bdnd3K+YycGh+nYtTj6Zp4+6/cxlf8UJi8toQ28ff2b7mnqzjFPvNCuHB3frdimT8X1PeTU9Z/JUtRnEaA==
   dependencies:
     cli-color "^1.4.0"
     fs-extra "^7.0.1"
@@ -2153,10 +2153,10 @@ sequelize-pool@^6.0.0:
   resolved "https://registry.yarnpkg.com/sequelize-pool/-/sequelize-pool-6.0.0.tgz#2b2f6570fb633ecb38a338c4fc266c0e42ce2af7"
   integrity sha512-D/VfOX2Z+6JTWqM73lhcqMXp1X4CeqRNVMlndvbOMtyjFAZ2kYzH7rGFGFrLO1r+RZQdc/h+3zQL4nd3cclNLg==
 
-sequelize@^6.1.0:
-  version "6.1.0"
-  resolved "https://registry.yarnpkg.com/sequelize/-/sequelize-6.1.0.tgz#576eb95709142dbc96f4a8f2b166932cc2781f8d"
-  integrity sha512-8x603RQrj14QZ4dGpsYPMr3YGqsihNX9WPclNN83prwrhHAJH9LHfOG/pK2XUdrwYtbRz+2a7xKXK7rVdw3P2A==
+sequelize@^6.2.2:
+  version "6.2.2"
+  resolved "https://registry.yarnpkg.com/sequelize/-/sequelize-6.2.2.tgz#cc65acbbc089673e1fe84df8215c93a18d8e7e53"
+  integrity sha512-X9UAfs4vMW9gLicqrPXb+ecm9GjgK7Y7IYRfjwnTeffJhRhGfS0fTC6bgVajW2PfHIvNqnQlCO88uDkibzgAmw==
   dependencies:
     debug "^4.1.1"
     dottie "^2.0.0"

@@ -1,3 +1,4 @@
+import path from 'path'
 import { Sequelize, Op } from 'sequelize'
 import { Utils } from '@semo/core'
 
@@ -27,8 +28,7 @@ class DatabaseLoader {
   }
 
   get defaultConnection() {
-    const appConfig = Utils.getApplicationConfig()
-    return Utils._.get(appConfig, 'semo-plugin-sequelize.defaultConnection')
+    return Utils.config('$plugin.sequelize.defaultConnection')
   }
 
   async getConfigs() {
@@ -193,14 +193,15 @@ class DatabaseLoader {
 
           if (modelDir) {
             try {
-              modelFilePath = require.resolve(`${modelDir}/${opts.modelKey ? opts.modelKey + '/' : ''}${modelNameUpper}`)
+              modelFilePath = require.resolve(path.resolve(process.cwd(), `${modelDir}/${opts.modelKey ? opts.modelKey + '/' : ''}${modelNameUpper}`))
             } catch (e) {
               if (e.code !== 'MODULE_NOT_FOUND') {
                 console.error(e.message)
               }
             }
             if (Utils._.isString(modelDir) && modelFilePath && Utils.fs.existsSync(modelFilePath)) {
-              model = (require(modelFilePath)).init(newTableInfo, options)
+              const modelLoaded = require(modelFilePath)
+              model = (modelLoaded.default || modelLoaded).init(newTableInfo, options)
             } else {
               model = sequelize.define(modelNameUpper, newTableInfo, options)
             }
