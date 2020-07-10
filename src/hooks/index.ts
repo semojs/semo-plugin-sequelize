@@ -1,10 +1,11 @@
+import { Utils } from '@semo/core'
 import DatabaseLoader from '../common/DatabaseLoader'
 
-export const hook_hook = {
+export const hook_hook = new Utils.Hook('semo', {
   sequelize_connection: 'Define db connections, used by Sequelize'
-}
+})
 
-export const hook_repl: any = () => {
+export const hook_repl: any = new Utils.Hook('semo', () => {
   const dbLoaderForRepl = new DatabaseLoader({
     readonly: true
   })
@@ -17,9 +18,9 @@ export const hook_repl: any = () => {
       Sequelize: dbLoaderForRepl.Sequelize
     }
   }
-}
+})
 
-export const hook_component: any = () => {
+export const hook_component: any = new Utils.Hook('semo', () => {
   const dbLoaderForComponent = new DatabaseLoader({
     readonly: false
   })
@@ -31,4 +32,4 @@ export const hook_component: any = () => {
       Sequelize: dbLoaderForComponent.Sequelize
     }
   }
-}
+})
