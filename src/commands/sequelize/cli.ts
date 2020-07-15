@@ -11,7 +11,7 @@ export const builder = function(yargs: any) {
 export const handler = async function(argv: any) {
   const { Utils } = argv.$semo
   const dbKey = Utils.pluginConfig('defaultConnection')
-  const { sequelize } = await Utils.invokeHook('component')
+  const { sequelize } = await Utils.invokeHook('semo:component')
   let dbConfig = await sequelize.db.getConfig(dbKey)
 
   if (!dbConfig) {

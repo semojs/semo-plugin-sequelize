@@ -105,7 +105,7 @@ export const handler = async function(argv: any) {
   const dbKey = Utils.pluginConfig('defaultConnection')
 
   try {
-    const { sequelize } = await Utils.invokeHook('component')
+    const { sequelize } = await Utils.invokeHook('semo:component')
     let { db } =  await sequelize.db.load(dbKey)
     let dbConfig = await sequelize.db.getConfig(dbKey)
 

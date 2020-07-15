@@ -33,7 +33,7 @@ class DatabaseLoader {
 
   async getConfigs() {
     const rcSequelizeConfig = Utils.config('$plugin.sequelize.connection')
-    const hookSequelizeConfig = await Utils.invokeHook('sequelize_connection')
+    const hookSequelizeConfig = await Utils.invokeHook('sequelize:connection')
     const finalSequelizeConfig = Utils._.merge(rcSequelizeConfig, hookSequelizeConfig)
     return finalSequelizeConfig
   }

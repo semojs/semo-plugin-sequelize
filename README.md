@@ -103,7 +103,7 @@ Here, sequelize-cli only can choose to use one database to migrate.
 ```js
 import { Utils } from '@semo/core'
 
-const { sequelize } = await Utils.invokeHook('component')
+const { sequelize } = await Utils.invokeHook('semo:component')
 const { Op, Sequelize } = sequelize
 const { db, models: { YourModel } } = await sequelize.db.load('dbKey)
 const count = await YourModel.count({

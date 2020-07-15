@@ -2,7 +2,7 @@ import { Utils } from '@semo/core'
 import DatabaseLoader from '../common/DatabaseLoader'
 
 export const hook_hook = new Utils.Hook('semo', {
-  sequelize_connection: 'Define db connections, used by Sequelize'
+  connection: 'Define db connections, used by Sequelize'
 })
 
 export const hook_repl: any = new Utils.Hook('semo', () => {
