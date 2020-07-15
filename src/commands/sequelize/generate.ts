@@ -34,8 +34,8 @@ export const handler = async function(argv: any) {
 
   try {
     const { sequelize } = await Utils.invokeHook('semo:component')
-    let { db } = await sequelize.db.load(dbKey)
-    const dbConfig = await sequelize.db.getConfig(dbKey)
+    let { db } = await sequelize.load(dbKey)
+    const dbConfig = await sequelize.getConfig(dbKey)
 
     let tableName =
       dbConfig.prefix && argv.tableName.indexOf(dbConfig.prefix) !== 0

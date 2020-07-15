@@ -93,7 +93,7 @@ module.exports = {
  * For Sequelize Cli db connection
  */
 
-module.exports = require('semo-plugin-sequelize').sequelize.db.getConfig('dbKey')
+module.exports = require('semo-plugin-sequelize').sequelize.getConfig('dbKey')
 ```
 
 Here, sequelize-cli only can choose to use one database to migrate.
@@ -105,7 +105,7 @@ import { Utils } from '@semo/core'
 
 const { sequelize } = await Utils.invokeHook('semo:component')
 const { Op, Sequelize } = sequelize
-const { db, models: { YourModel } } = await sequelize.db.load('dbKey)
+const { db, models: { YourModel } } = await sequelize.load('dbKey)
 const count = await YourModel.count({
   where: {
     id: {
@@ -128,7 +128,7 @@ This plugin has expose objects and methods to REPL, so you can assess db data fr
 
 ```js
 $ semo repl --hook
->>> const { models: { YourModel } } = await Semo.sequelize.db.load('dbKey')
+>>> const { models: { YourModel } } = await Semo.sequelize.load('dbKey')
 >>> YourModel.count()
 2
 ```

@@ -4,8 +4,4 @@ const dbLoaderForComponent = new DatabaseLoader({
   readonly: false
 })
 
-export const sequelize: any = {
-  db: dbLoaderForComponent,
-  Op: dbLoaderForComponent.Op,
-  Sequelize: dbLoaderForComponent.Sequelize
-}
+export const sequelize: any = dbLoaderForComponent 

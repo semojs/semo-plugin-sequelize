@@ -12,11 +12,7 @@ export const hook_repl: any = new Utils.Hook('semo', () => {
 
   
   return {
-    sequelize: {
-      db: dbLoaderForRepl,
-      Op: dbLoaderForRepl.Op,
-      Sequelize: dbLoaderForRepl.Sequelize
-    }
+    sequelize: dbLoaderForRepl
   }
 })
 
@@ -26,10 +22,6 @@ export const hook_component: any = new Utils.Hook('semo', () => {
   })
 
   return {
-    sequelize: {
-      db: dbLoaderForComponent,
-      Op: dbLoaderForComponent.Op,
-      Sequelize: dbLoaderForComponent.Sequelize
-    }
+    sequelize: dbLoaderForComponent 
   }
 })
