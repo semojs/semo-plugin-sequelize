@@ -55,7 +55,7 @@ class DatabaseLoader {
   }
 
   // Load database instance by db key
-  async load(dbKey: string | { [propName: string]: any }, opts: any = {}) {
+  async load(dbKey: string | { [propName: string]: any } = '', opts: any = {}) {
     let that: DatabaseLoader = this
     opts = Utils._.merge({
       raw: undefined,
@@ -64,6 +64,11 @@ class DatabaseLoader {
     }, opts)
 
     try {
+
+      if (!dbKey) {
+        dbKey = this.defaultConnection
+      }
+      
       const instanceKey: string = Utils._.isString(dbKey) ? <string>dbKey : Utils.md5(JSON.stringify(dbKey))
 
       // init db only once
