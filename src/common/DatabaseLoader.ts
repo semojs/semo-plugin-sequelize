@@ -207,7 +207,7 @@ class DatabaseLoader {
             }
             if (Utils._.isString(modelDir) && modelFilePath && Utils.fs.existsSync(modelFilePath)) {
               const modelLoaded = require(modelFilePath)
-              model = (modelLoaded.default || modelLoaded).init(newTableInfo, options)
+              model = (modelLoaded.default || modelLoaded[modelNameUpper]).init(newTableInfo, options)
             } else {
               model = sequelize.define(modelNameUpper, newTableInfo, options)
             }
