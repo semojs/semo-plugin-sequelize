@@ -106,7 +106,7 @@ export const handler = async function(argv: any) {
 
   try {
     const { sequelize } = await Utils.invokeHook('semo:component')
-    let { db } =  await sequelize.load(dbKey)
+    let { db } =  await sequelize.load(dbKey, { associate: false })
     let dbConfig = await sequelize.getConfig(dbKey)
 
     const queryInterface = db.getQueryInterface()

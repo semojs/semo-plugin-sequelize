@@ -12,7 +12,8 @@ class DatabaseLoader {
     this.options = Object.assign(
       {},
       {
-        readonly: false
+        readonly: false,
+        associate: true
       },
       options
     )
@@ -68,7 +69,7 @@ class DatabaseLoader {
       if (!dbKey) {
         dbKey = this.defaultConnection
       }
-      
+
       const instanceKey: string = Utils._.isString(dbKey) ? <string>dbKey : Utils.md5(JSON.stringify(dbKey))
 
       // init db only once
@@ -234,13 +235,16 @@ class DatabaseLoader {
         }
       })
 
-      // trigger association
-      Object.keys(sequelize.models).forEach(function (modelName) {
-        let model: any = sequelize.models[modelName]
-        if (Utils._.isFunction(model.associate)) {
-          model.associate(sequelize.models)
-        }
-      })
+      if (opts.associate) {
+        // trigger association
+        Object.keys(sequelize.models).forEach(function (modelName) {
+          let model: any = sequelize.models[modelName]
+          if (Utils._.isFunction(model.associate)) {
+            model.associate(sequelize.models)
+          }
+        })
+      }
+
 
       return { db: that.instances[instanceKey], models: that.instances[instanceKey].models, instance: that}
     } catch (e) {
