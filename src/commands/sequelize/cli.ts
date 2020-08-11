@@ -55,7 +55,7 @@ export const handler = async function(argv: any) {
     return
   }
 
-  Utils.exec(`${cmd} ${connectionString}`)
+  Utils.exec(`${cmd} '${connectionString}'`)
 
   
 }
