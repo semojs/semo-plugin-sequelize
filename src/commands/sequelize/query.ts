@@ -4,7 +4,7 @@ const MAX_FIELDS_RENDER_TABLE = 6
 const MAX_SELECT_ROWS = 1000
 
 export const plugin = 'sequelize'
-export const command = 'query <sql>'
+export const command = 'query <sql> [dbKey]'
 export const desc = 'Execute SQL, only support SELECT'
 export const aliases = ['q']
 

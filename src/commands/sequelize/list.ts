@@ -1,5 +1,5 @@
 export const plugin = 'sequelize'
-export const command = 'list'
+export const command = 'list [dbKey]'
 export const desc = 'List all table of specific database'
 export const aliases = ['l', 'ls']
 

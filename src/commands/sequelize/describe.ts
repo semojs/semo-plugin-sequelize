@@ -91,7 +91,7 @@ const getPostgresFieldsCommentContent = async (db: any, tableName: string) => {
 }
 
 export const plugin = 'sequelize'
-export const command = 'describe <tableName>'
+export const command = 'describe <tableName> [dbKey]'
 export const desc = 'Sequelize db table describe'
 export const aliases = ['d', 'desc']
 
