@@ -23,12 +23,14 @@ const TYPESCRIPT_MIGRATION_TEMPLATE =
   // args: up & down
   `'use strict';
 
+import { QueryInterface, DataTypes } from 'sequelize';
+
 export = {
-  up: function (queryInterface: any, Sequelize: any) {
+  up: function (queryInterface: QueryInterface, Sequelize: typeof DataTypes) {
     %s
   },
 
-  down: function (queryInterface: any, Sequelize: any) {
+  down: function (queryInterface: QueryInterface, Sequelize: typeof DataTypes) {
     %s
   }
 };
@@ -36,16 +38,16 @@ export = {
 
 const CREATE_TABLE_TEMPLATE = `return queryInterface.createTable('%s', %s);` // args: tablename & attrs
 const DROP_TABLE_TEMPLATE = `return queryInterface.dropTable('%s');` // args: tablename
-const RENAME_TABLE_TEMPLATE = `return queryInterface.renameTable('%s', '%s')` // args: tablename before, tablename after
-const PROCESS_MULTI_FIELDS = `return Promise.all([\n%s])` // args: fields ops
-const CREATE_FIELD_TEMPLATE_NOT_RETURN = `queryInterface.addColumn('%s', '%s', %s)` // args: tablename, fieldname, type
-const DROP_FIELD_TEMPLATE_NOT_RETURN = `queryInterface.removeColumn('%s', '%s')` // args: tablename, fieldname
-const CREATE_FIELD_TEMPLATE = `return queryInterface.addColumn('%s', '%s', %s)` // args: tablename, fieldname, type
+const RENAME_TABLE_TEMPLATE = `return queryInterface.renameTable('%s', '%s');` // args: tablename before, tablename after
+const PROCESS_MULTI_FIELDS = `return Promise.all([\n%s]);` // args: fields ops
+const CREATE_FIELD_TEMPLATE_NOT_RETURN = `queryInterface.addColumn('%s', '%s', %s);` // args: tablename, fieldname, type
+const DROP_FIELD_TEMPLATE_NOT_RETURN = `queryInterface.removeColumn('%s', '%s');` // args: tablename, fieldname
+const CREATE_FIELD_TEMPLATE = `return queryInterface.addColumn('%s', '%s', %s);` // args: tablename, fieldname, type
 const DROP_FIELD_TEMPLATE = `return queryInterface.removeColumn('%s', '%s');` // args: tablename, fieldname
-const MODIFY_FIELD_TEMPLATE = `return queryInterface.changeColumn('%s', '%s', %s)` // args: tablename, fieldname, type
-const RENAME_FIELD_TEMPLATE = `return queryInterface.renameColumn('%s', '%s', '%s')` // args: tablename, fieldname before, field name after
-const CREATE_FIELD_INDEX_TEMPLATE = `return queryInterface.addIndex('%s', ['%s'], {name: '%s', type: 'UNIQUE'})` // args: tablename, fieldname, index name
-const REMOVE_FIELD_INDEX_TEMPLATE = `return queryInterface.removeIndex('%s', '%s')` // args: tablename, fieldname, type
+const MODIFY_FIELD_TEMPLATE = `return queryInterface.changeColumn('%s', '%s', %s);` // args: tablename, fieldname, type
+const RENAME_FIELD_TEMPLATE = `return queryInterface.renameColumn('%s', '%s', '%s');` // args: tablename, fieldname before, field name after
+const CREATE_FIELD_INDEX_TEMPLATE = `return queryInterface.addIndex('%s', ['%s'], {name: '%s', type: 'UNIQUE'});` // args: tablename, fieldname, index name
+const REMOVE_FIELD_INDEX_TEMPLATE = `return queryInterface.removeIndex('%s', '%s');` // args: tablename, fieldname, type
 
 const schemaInfo = {
   getForeignKeysQuery: function(tableName: string) {
@@ -168,7 +170,7 @@ const genFieldType = function(_attr: string) {
     val = 'Sequelize.ARRAY'
   }
 
-  return val
+  return val + ','
 }
 
 const validateDataType = function(dataType: string, sequelize: any) {
@@ -251,28 +253,28 @@ const genAttrForOneTable = async function(
     optionAttrs.id = {
       autoIncrement: true,
       primaryKey: true,
-      type: 'Sequelize.INTEGER'
+      type: 'Sequelize.INTEGER',
     }
 
     attrsTransformed.forEach(attribute => {
       if (attribute) {
         optionAttrs[attribute.fieldName] = {
           type: attribute.dataFunction
-            ? `Sequelize.${attribute.dataFunction.toUpperCase()}(Sequelize.${attribute.dataType.toUpperCase()})`
-            : `Sequelize.${attribute.dataType.toUpperCase()}`
+            ? `Sequelize.${attribute.dataFunction.toUpperCase()}(Sequelize.${attribute.dataType.toUpperCase()}),`
+            : `Sequelize.${attribute.dataType.toUpperCase()},`
         }
       }
     })
 
     if (!options.disableTimestamps) {
       optionAttrs.created_at = {
-        type: 'Sequelize.DATE'
+        type: 'Sequelize.DATE,'
       }
     }
 
     if (!options.disableTimestamps) {
       optionAttrs.updated_at = {
-        type: 'Sequelize.DATE'
+        type: 'Sequelize.DATE,'
       }
     }
   }
