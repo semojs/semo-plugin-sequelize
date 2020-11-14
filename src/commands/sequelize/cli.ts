@@ -25,8 +25,14 @@ export const handler = async function(argv: any) {
       const currentPath = process.cwd()
       if (fs.existsSync(path.resolve(currentPath, '.sequelizerc'))) {
         const sequelizerc = require(path.resolve(currentPath, '.sequelizerc'))
-        const getConfig = sequelizerc.config
-        dbConfig = await getConfig
+
+        console.log(sequelizerc.config)
+        if (Utils._.isString(sequelizerc.config)) {
+          const getConfig = require(sequelizerc.config)
+          dbConfig = await getConfig
+        } else {
+          dbConfig = sequelizerc.config
+        }
       } else {
         throw new Error('Semo sequelize do not know db connection.')
       }
