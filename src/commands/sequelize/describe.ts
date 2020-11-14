@@ -119,8 +119,13 @@ export const handler = async function(argv: any) {
       const currentPath = process.cwd()
       if (fs.existsSync(path.resolve(currentPath, '.sequelizerc'))) {
         const sequelizerc = require(path.resolve(currentPath, '.sequelizerc'))
-        const getConfig = sequelizerc.config
-        dbConfig = await getConfig
+        if (Utils._.isString(sequelizerc.config)) {
+          const getConfig = require(sequelizerc.config)
+          dbConfig = await getConfig
+        } else {
+          dbConfig = sequelizerc.config
+        }
+        
         let databaseLoaded = await sequelize.load(dbConfig, { associate: false })
         db = databaseLoaded.db
       } else {
