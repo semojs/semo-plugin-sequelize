@@ -4,6 +4,13 @@ import tosource from 'tosource'
 
 import { Utils } from '@semo/core'
 
+const beautifyOptions = {
+  editorconfig: true,
+  space_after_named_function: true,
+  space_after_anon_function: true,
+  indent_size: 2,
+}
+
 const MIGRATION_TEMPLATE =
   // args: up & down
   `'use strict';
@@ -253,7 +260,7 @@ const genAttrForOneTable = async function(
     optionAttrs.id = {
       autoIncrement: true,
       primaryKey: true,
-      type: 'Sequelize.INTEGER',
+      type: 'Sequelize.INTEGER,',
     }
 
     attrsTransformed.forEach(attribute => {
@@ -354,7 +361,7 @@ export const genMigrationForTable = async function(table: string, sequelize: any
     down = ''
   }
   const template = options.typescript ? TYPESCRIPT_MIGRATION_TEMPLATE : MIGRATION_TEMPLATE
-  const migration = beautify(util.format(template, up, down), { indent_size: 2 })
+  const migration = beautify(util.format(template, up, down), beautifyOptions)
   return migration
 }
 
@@ -439,7 +446,7 @@ export const genMigrationForField = async function(
   }
 
   const template = options.typescript ? TYPESCRIPT_MIGRATION_TEMPLATE : MIGRATION_TEMPLATE
-  const migration = beautify(util.format(template, up, down), { indent_size: 2 })
+  const migration = beautify(util.format(template, up, down), beautifyOptions)
   return migration
 }
 
