@@ -1,10 +1,16 @@
 import path from 'path'
-import { Sequelize, Op } from 'sequelize'
+import { Sequelize, Op, Model } from 'sequelize'
 import { Utils } from '@semo/core'
 
 import DSNParser from './DSNParser'
 
-class DatabaseLoader {
+interface DatabaseLoad {
+  instance: DatabaseLoader
+  models: Model[]
+  db: Sequelize
+}
+
+export class DatabaseLoader {
   lastInstance: any
   options: { [propName: string]: any }
   instances: { [propName: string]: any }
@@ -56,7 +62,7 @@ class DatabaseLoader {
   }
 
   // Load database instance by db key
-  async load(dbKey: string | { [propName: string]: any } = '', opts: any = {}) {
+  async load(dbKey: string | { [propName: string]: any } = '', opts: any = {}): Promise<DatabaseLoad | never>{
     let that: DatabaseLoader = this
     opts = Utils._.merge({
       raw: undefined,
@@ -253,5 +259,3 @@ class DatabaseLoader {
   }
 
 }
-
-export = DatabaseLoader

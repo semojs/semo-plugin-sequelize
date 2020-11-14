@@ -1,4 +1,4 @@
-import DatabaseLoader from './common/DatabaseLoader'
+import { DatabaseLoader } from './common/DatabaseLoader'
 
 const dbLoaderForComponent = new DatabaseLoader({
   readonly: false

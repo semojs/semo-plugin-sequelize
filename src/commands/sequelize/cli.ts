@@ -1,4 +1,8 @@
 import DSNParser from '../../common/DSNParser'
+import fs from 'fs'
+import path from 'path'
+import { UtilsType } from '@semo/core'
+import { DatabaseLoader } from '../../common/DatabaseLoader'
 
 export const plugin = 'sequelize'
 export const command = 'cli [dbKey]'
@@ -9,13 +13,26 @@ export const builder = function(yargs: any) {
 }
 
 export const handler = async function(argv: any) {
-  const { Utils } = argv.$semo
+  const Utils:UtilsType = argv.$semo.Utils
   const dbKey = Utils.pluginConfig('defaultConnection', argv.dbKey)
-  const { sequelize } = await Utils.invokeHook('semo:component')
-  let dbConfig = await sequelize.getConfig(dbKey)
-
-  if (!dbConfig) {
-    Utils.error('Invalid db key!')
+  let dbConfig
+  
+  try {
+    const { sequelize } = await Utils.invokeHook<{ sequelize: DatabaseLoader }>('semo:component')
+    if (dbKey) {
+      dbConfig = await sequelize.getConfig(dbKey)
+    } else {
+      const currentPath = process.cwd()
+      if (fs.existsSync(path.resolve(currentPath, '.sequelizerc'))) {
+        const sequelizerc = require(path.resolve(currentPath, '.sequelizerc'))
+        const getConfig = sequelizerc.config
+        dbConfig = await getConfig
+      } else {
+        throw new Error('Semo sequelize do not know db connection.')
+      }
+    }
+  } catch (e) {
+    Utils.error(e.stack)
   }
 
   if (Utils._.isString(dbConfig)) {

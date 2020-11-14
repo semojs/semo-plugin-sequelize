@@ -90,3 +90,6 @@ typings/
 # Custom
 /lib
 src/migrations
+
+.sequelizerc
+database.sqlite

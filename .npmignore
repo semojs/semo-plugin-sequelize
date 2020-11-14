@@ -8,3 +8,5 @@ docs
 tsconfig.json
 migrations
 /lib/migrations
+database.sqlite
+.sequelizerc
