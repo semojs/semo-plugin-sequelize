@@ -25,8 +25,6 @@ export const handler = async function(argv: any) {
       const currentPath = process.cwd()
       if (fs.existsSync(path.resolve(currentPath, '.sequelizerc'))) {
         const sequelizerc = require(path.resolve(currentPath, '.sequelizerc'))
-
-        console.log(sequelizerc.config)
         if (Utils._.isString(sequelizerc.config)) {
           const getConfig = require(sequelizerc.config)
           dbConfig = await getConfig
